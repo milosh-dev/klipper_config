@@ -1,5 +1,5 @@
 [Variables]
 infill_sqv = 10
 pressure_advance = [{'id': 'default', 'val': [{'nozzle': 0.4, 'pa': 0.8, 'st': 0.04}]}, {'id': 'PLA+', 'val': [{'nozzle': 0.4, 'pa': 0.6, 'st': 0.04}]}]
-print_stats = {'filament': 0, 'time': {'filter': 0, 'total': 0, 'service': 0}}
+print_stats = {'filament': 14178.00212000467, 'time': {'filter': 0, 'total': 13447, 'service': 13447}}
 
