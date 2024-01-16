@@ -41,3 +41,32 @@ channel = stable
 repo = fluidd-core/fluidd
 path = ~/fluidd
 
+[update_manager led_effect]
+type = git_repo
+path = ~/klipper-led_effect
+origin = https://github.com/julianschill/klipper-led_effect.git
+is_system_service = False
+
+[secrets]
+
+[notifier pushover]
+url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}
+events = gcode
+title = Kossel: {event_name}
+body = {event_message}
+attach = http://localhost/webcam/?action=snapshot
+
+[notifier pushover_error]
+url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}?priority=emergency&expire=3600&retry=300&sound=alien
+events = error
+title = Kossel: EMERG - {event_args[1].filename}
+body = {event_name}: {event_args[1].message}
+attach = http://localhost/webcam/?action=snapshot
+
+[notifier pushover_complete]
+url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}
+events = complete
+title = Kossel: Print completed
+body = Completed: {event_args[1].filename}
+attach = http://localhost/webcam/?action=snapshot
+
