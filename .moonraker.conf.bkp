@@ -47,6 +47,9 @@ path = ~/klipper-led_effect
 origin = https://github.com/julianschill/klipper-led_effect.git
 is_system_service = False
 
+[file_manager]
+enable_object_processing = True
+
 [secrets]
 
 [notifier pushover]
@@ -75,4 +78,14 @@ events = complete
 title = Kossel: Printimine lõpetatud
 body = Fail: {event_args[1].filename}
 attach = http://localhost/webcam/?action=snapshot
+
+[update_manager moonraker-obico]
+type = git_repo
+path = /home/raoul/moonraker-obico
+origin = https://github.com/TheSpaghettiDetective/moonraker-obico.git
+env = /home/raoul/moonraker-obico/../moonraker-obico-env/bin/python
+requirements = requirements.txt
+install_script = install.sh
+managed_services = 
+	moonraker-obico
 
