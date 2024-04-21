@@ -67,7 +67,7 @@ body = {event_name}: {event_args[1].message}
 attach = http://localhost/webcam/?action=snapshot
 
 [notifier pushover_start]
-url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}?priority=low
+url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}?priority=high
 events = started
 title = Kossel: Alustan printimist
 body = Fail: {event_args[1].filename}
