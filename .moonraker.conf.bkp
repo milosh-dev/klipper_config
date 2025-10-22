@@ -60,23 +60,23 @@ body = {event_message}
 attach = http://localhost/webcam/?action=snapshot
 
 [notifier pushover_error]
-url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}?priority=emergency&expire=3600&retry=300&sound=alien
+url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}?priority=high
 events = error
 title = Kossel: EMERG - {event_args[1].filename}
 body = {event_name}: {event_args[1].message}
 attach = http://localhost/webcam/?action=snapshot
 
 [notifier pushover_start]
-url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}?priority=high
+url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}
 events = started
 title = Kossel: Alustan printimist
-body = Fail: {event_args[1].filename}
+body = STL: {event_args[1].filename}
 
 [notifier pushover_complete]
 url = pover://{secrets.pushover_creds.user}@{secrets.pushover_creds.token}/{secrets.pushover_creds.device}
 events = complete
 title = Kossel: Printimine lõpetatud
-body = Fail: {event_args[1].filename}
+body = STL: {event_args[1].filename}
 attach = http://localhost/webcam/?action=snapshot
 
 [update_manager moonraker-obico]
