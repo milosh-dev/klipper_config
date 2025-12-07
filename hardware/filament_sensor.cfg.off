@@ -1,0 +1,52 @@
+#################################
+# BTT Smart Filament Sensor
+#################################
+[filament_motion_sensor BBT]
+detection_length: 7.00 ; This can be adjusted to your desired level of sensitivity. 10 is a recommended value to prevent flow dropoff false triggers.
+extruder: extruder
+switch_pin: ^RUNOUT_SENSOR
+pause_on_runout: True ; This can be set to false to debug false positives putting the sensor in "monitor mode". The printer will not pause but it will run the runout_gcode below.
+event_delay: 3.0
+pause_delay: 0.5
+runout_gcode:
+    {% set count = printer["gcode_macro _BBT_ENABLE"].count + 1 %}
+    {% if count < 2 %}
+        UPDATE_DELAYED_GCODE ID=_FILAMENT_RUNOUT_RETRY DURATION=45
+    {% else %}
+        SET_GCODE_VARIABLE MACRO=_BBT_ENABLE VARIABLE=count VALUE=0
+        M117 Filamendi probleem!
+        {action_call_remote_method("notify",
+            name="pushover",
+            message="Filamendiga on mingi probleem!")}
+    {% endif %}
+
+[delayed_gcode _FILAMENT_RUNOUT_RETRY]
+gcode:
+    RESUME
+    UPDATE_DELAYED_GCODE ID=_FILAMENT_RUNOUT_COUNT_RESET DURATION=180
+
+[delayed_gcode _FILAMENT_RUNOUT_COUNT_RESET]:
+gcode: 
+    {% set count = printer["gcode_macro _BBT_ENABLE"].count - 1 %}
+    SET_GCODE_VARIABLE MACRO=_BBT_ENABLE VARIABLE=count VALUE=count
+
+[delayed_gcode _DISABLEFILAMENTSENSOR] ; This will disable the SFS 1 second after klipper starts
+initial_duration: 1
+gcode:
+    SET_FILAMENT_SENSOR SENSOR=BBT ENABLE=0 ; Put your filament sensor's name after SENSOR=
+
+[gcode_macro _BBT_ENABLE] ; Add this to PRINT_START
+description: Enable smart filament sensor
+variable_count: 0
+gcode:
+    M117 ENABLING the Smart Filament Sensor
+    G92 E0
+    SET_FILAMENT_SENSOR SENSOR=BBT ENABLE=1 ; Put your filament sensor's name after SENSOR=
+
+[gcode_macro _BBT_DISABLE] ; Add this to PRINT_END and PRINT_CANCEL
+description: Disable smart filament sensor
+gcode:
+    M117 DISABLING the Smart Filament Sensor
+    G92 E0
+    SET_FILAMENT_SENSOR SENSOR=BBT ENABLE=0 ; Put your filament sensor's name after SENSOR=
+    {% set TARGET_TEMP= printer["gcode_macro START_PRINT"].temp_target %}
