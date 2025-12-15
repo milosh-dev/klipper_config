@@ -89,17 +89,17 @@ gcode:
     {% if job == 0 %}
         RESPOND TYPE=echo MSG="State machine inactive."
         M117 State: Idle
-        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="idle"
+        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="'idle'"
         RETURN
     {% endif %}
 
     # Example: Centralized place to tag current menu state
     {% if 100 <= job < 200 %}
-        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="bed_mesh"
+        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="'bed_mesh'"
     {% elif 600 <= job < 700 %}
-        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="filament"
+        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="'filament'"
     {% else %}
-        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="working"
+        SET_GCODE_VARIABLE MACRO=_MENU_STATE VARIABLE=state VALUE="'working'"
     {% endif %}
 
     # Now run the appropriate state logic
