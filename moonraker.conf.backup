@@ -119,11 +119,3 @@ attach: http://localhost/webcam/?action=snapshot
 
 
 [include moonraker-obico-update.cfg]
-
-# Crowsnest update_manager entry
-[update_manager crowsnest]
-type: git_repo
-path: ~/crowsnest
-origin: https://github.com/mainsail-crew/crowsnest.git
-managed_services: crowsnest
-install_script: tools/pkglist.sh
