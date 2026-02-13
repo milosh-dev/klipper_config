@@ -1,2 +1,5 @@
 printer-*.cfg
 .variables.stb
+
+# Local Klipper config with SAVE_CONFIG
+printer.cfg

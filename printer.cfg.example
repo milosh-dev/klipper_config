@@ -1,4 +1,7 @@
 [include base/printer_base.cfg]
+# NOTE: This example keeps only includes and the auto-generated SAVE_CONFIG
+# block in printer.cfg. Klipper writes SAVE_CONFIG to printer.cfg, so keep
+# the real printer.cfg local and git-ignored.
 
 #*# <---------------------- SAVE_CONFIG ---------------------->
 #*# DO NOT EDIT THIS BLOCK OR BELOW. The contents are auto-generated.
